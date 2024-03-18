@@ -19,65 +19,41 @@
     </v-btn>
 
     <!-- Dialog for adding a new artist -->
-    <v-dialog v-model="showFormDialog" max-width="500">
-      <v-card>
-        <v-card-title>
-          Add New Artist
-        </v-card-title>
-        <v-card-text>
-          <v-form @submit.prevent="addNewArtist">
-            <v-text-field v-model="newArtist.name" label="Name"></v-text-field>
-            <!-- Input field for image -->
-            <input type="file" @change="onFileChange" accept="image/*">
-            <v-textarea v-model="newArtist.bio" label="Bio"></v-textarea>
-            <v-btn type="submit" color="primary">Add</v-btn>
-          </v-form>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+    <AddArtistDialog :showFormDialog="showFormDialog" @add-artist="addNewArtist" @close-dialog="showFormDialog = false"/>
 
-    <div class="text-center">
+    <div class="artist-grid">
       <!-- Loop through existing artists -->
-      <v-button
+      <ArtistCard
         v-for="(artist, index) in artists"
         :key="index"
-        @click="showArtistDialog(artist)"
-        class="artist-button"
-      >
-        <img
-          :src="artist.imageDataUrl ? artist.imageDataUrl : require(`../assets/artists/${artist.image}`)"
-          :alt="artist.name"
-          style="max-width: 200px; max-height: 200px;"
-        >
-      </v-button>
+        :artist="artist"
+        @show-artist-dialog="showArtistDialog"
+      />
     </div>
 
     <!-- Dialog for displaying artist details -->
-    <v-dialog v-model="dialog" width="500">
-      <v-card>
-        <v-card-title class="text-h5 grey lighten-2" v-if="selectedArtist">
-          {{ selectedArtist.name }}
-        </v-card-title>
-
-        <v-card-text v-if="selectedArtist">
-          {{ selectedArtist.bio }}
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="dialog = false">
-            Close
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <ArtistDialog :dialog="dialog" :selectedArtist="selectedArtist" @close-dialog="dialog = false"/>
   </div>
 </template>
 
+<style scoped>
+  .artist-grid {
+    display: flex;
+    flex-wrap: wrap;
+  }
+</style>
+
 <script>
+import ArtistCard from '../components/ArtistCard.vue';
+import ArtistDialog from '../components/ArtistDialog.vue';
+import AddArtistDialog from '../components/AddArtistDialog.vue';
+
 export default {
+  components: {
+    ArtistCard,
+    ArtistDialog,
+    AddArtistDialog
+  },
   data() {
     return {
       dialog: false, // Flag to control visibility of artist dialog
@@ -96,12 +72,7 @@ export default {
           bio: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
           imageDataUrl: null // Store image data URL for preview
         },
-      ],
-      newArtist: { // Object to store new artist details
-        name: '',
-        image: '',
-        bio: ''
-      }
+      ]
     };
   },
   methods: {
@@ -111,73 +82,15 @@ export default {
       this.dialog = true;
     },
     // Method to add new artist
-    addNewArtist() {
+    addNewArtist(newArtist) {
       // Push new artist to artists array
       this.artists.push({
-        name: this.newArtist.name,
-        image: this.newArtist.image,
-        bio: this.newArtist.bio,
-        imageDataUrl: this.newArtist.imageDataUrl // Store image data URL
+        name: newArtist.name,
+        image: newArtist.image,
+        bio: newArtist.bio,
+        imageDataUrl: newArtist.imageDataUrl // Store image data URL
       });
-      // Reset form fields
-      this.newArtist.name = '';
-      this.newArtist.image = '';
-      this.newArtist.bio = '';
-      // Close form dialog
-      this.showFormDialog = false;
     },
-    // Method to handle file input change
-    onFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          this.newArtist.imageDataUrl = reader.result;
-        };
-      }
-    },
-    // Method to open file upload dialog
-    openFileUpload(index) {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'image/*';
-      input.onchange = (event) => {
-        this.handleFileUpload(event, index);
-      };
-      input.click();
-    },
-    // Method to handle file upload
-    handleFileUpload(event, index) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          this.$set(this.artists[index], 'imageDataUrl', reader.result);
-        };
-      }
-    }
   }
 };
 </script>
-
-<style scoped>
-  .artist-button img {
-    max-width: 100px;
-    max-height: 100px;
-    filter: grayscale(100%); /* Convert image to black and white */
-    transition: filter 0.3s ease; /* Add transition for smooth effect */
-  }
-
-  .artist-button:hover img {
-    filter: grayscale(0%); /* Remove grayscale filter on hover */
-  }
-  .artist-button {
-    margin: 8px;
-    width: auto;
-    height: auto;
-    border-radius: 100px;
-    overflow: hidden;
-  }
-</style>
