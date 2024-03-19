@@ -40,7 +40,8 @@ export default {
     margin: 8px;
     width: auto;
     height: auto;
-    border-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     overflow: hidden;
   }
   .artist-name {
