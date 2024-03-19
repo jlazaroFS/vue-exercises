@@ -4,6 +4,7 @@
         <v-card-title>Edit Artist</v-card-title>
         <v-card-text>
             <v-text-field v-model="editedArtist.name" label="Name"></v-text-field>
+            <input type="file" @change="onFileChange" accept="image/*">
             <v-textarea v-model="editedArtist.bio" label="Bio"></v-textarea>
         </v-card-text>
         <v-card-actions>
@@ -36,6 +37,7 @@ export default{
         return {
             editedArtist: {
                 name: '',
+                image: '',
                 bio: ''
             }
         }
@@ -61,7 +63,17 @@ export default{
         editArtist() {
             this.$emit('close-dialog', false);
             this.$emit('edit-artist', {...this.selectedArtist, ...this.editedArtist});
-        }
+        },
+        onFileChange(event) {   // FIXME: Image is not updating
+        const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    this.editedArtist.image = reader.result;
+                };
+            }
+        },
     }
 }
 </script>
