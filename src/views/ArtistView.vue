@@ -3,7 +3,7 @@
     <h1>Artists</h1>
     <p>Lorem ipsum</p>
 
-    <!-- Button to open the form dialog -->
+    <!-- Button to open the add artist form dialog -->
     <v-btn
       color="primary"
       elevation="2"
@@ -18,11 +18,13 @@
       </v-icon>
     </v-btn>
 
-    <!-- Dialog for adding a new artist -->
-    <AddArtistDialog :showFormDialog="showFormDialog" @add-artist="addNewArtist" @close-dialog="showFormDialog = false"/>
+    <AddArtistDialog
+      :showFormDialog="showFormDialog"
+      @add-artist="addNewArtist"
+      @close-dialog="showFormDialog = false"
+    />
 
     <div class="artist-grid">
-      <!-- Loop through existing artists -->
       <ArtistCard
         v-for="(artist, index) in artists"
         :key="index"
@@ -31,8 +33,27 @@
       />
     </div>
 
-    <!-- Dialog for displaying artist details -->
-    <ArtistDialog :dialog="dialog" :selectedArtist="selectedArtist" @close-dialog="dialog = false"/>
+    <ArtistDialog
+      :dialog="dialog"
+      :selectedArtist="selectedArtist"
+      @close-dialog="dialog = false"
+      @show-edit-dialog="showEditArtistDialog"
+      @show-delete-dialog="showDeleteArtistDialog"
+    />
+
+    <EditArtistDialog
+      :dialog="editDialog"
+      :selectedArtist="selectedArtist"
+      @close-dialog="editDialog = false"
+      @edit-artist="editArtist"
+    />
+
+    <DeleteArtistDialog
+      :dialog="deleteDialog"
+      :selectedArtist="selectedArtist"
+      @close-dialog="deleteDialog = false"
+      @delete-artist="deleteArtist"
+    />
   </div>
 </template>
 
@@ -47,19 +68,25 @@
 import ArtistCard from '../components/ArtistCard.vue';
 import ArtistDialog from '../components/ArtistDialog.vue';
 import AddArtistDialog from '../components/AddArtistDialog.vue';
+import EditArtistDialog from '../components/EditArtistDialog.vue';
+import DeleteArtistDialog from '../components/DeleteArtistDialog.vue';
 
 export default {
   components: {
     ArtistCard,
     ArtistDialog,
-    AddArtistDialog
+    AddArtistDialog,
+    EditArtistDialog,
+    DeleteArtistDialog
   },
   data() {
     return {
-      dialog: false, // Flag to control visibility of artist dialog
-      showFormDialog: false, // Flag to control visibility of form dialog
-      selectedArtist: null, // Store the selected artist
-      artists: [ // Array of artists with their details
+      dialog: false,
+      editDialog: false,
+      deleteDialog: false,
+      showFormDialog: false,
+      selectedArtist: null,
+      artists: [
         {
           name: "Taylor Swift",
           image: "taylor_swift.png",
@@ -76,14 +103,11 @@ export default {
     };
   },
   methods: {
-    // Method to show artist details dialog
     showArtistDialog(artist) {
       this.selectedArtist = artist;
       this.dialog = true;
     },
-    // Method to add new artist
     addNewArtist(newArtist) {
-      // Push new artist to artists array
       this.artists.push({
         name: newArtist.name,
         image: newArtist.image,
@@ -91,6 +115,26 @@ export default {
         imageDataUrl: newArtist.imageDataUrl // Store image data URL
       });
     },
+    showEditArtistDialog(artist) {
+      this.selectedArtist = artist;
+      this.editDialog = true;
+    },
+    editArtist(artist) {
+      const index = this.artists.findIndex(a => a.name === artist.name);
+      if (index !== -1) {
+        this.artists.splice(index, 1, artist);
+      }
+    },
+    showDeleteArtistDialog(artist) {
+      this.selectedArtist = artist;
+      this.deleteDialog = true;
+    },
+    deleteArtist(artist) {
+      const index = this.artists.findIndex(a => a.name === artist.name);
+      if (index !== -1) {
+        this.artists.splice(index, 1);
+      }
+    }
   }
 };
 </script>

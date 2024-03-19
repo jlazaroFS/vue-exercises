@@ -5,6 +5,7 @@
       :alt="artist.name"
       class="artist-image"
     >
+    <p class="artist-name">{{ artist.name }}</p>
   </div>
 </template>
 
@@ -41,5 +42,12 @@ export default {
     height: auto;
     border-radius: 10px;
     overflow: hidden;
+  }
+  .artist-name {
+    text-align: center;
+    background-color: #7170E6;
+    color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 </style>

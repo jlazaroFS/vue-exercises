@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="showFormDialog" max-width="500">
+  <v-dialog v-model="showFormDialog" max-width="500" @input="dialogClosed">
     <v-card>
       <v-card-title>
         Add New Artist
@@ -7,7 +7,6 @@
       <v-card-text>
         <v-form @submit.prevent="addNewArtist">
           <v-text-field v-model="newArtist.name" label="Name"></v-text-field>
-          <!-- Input field for image -->
           <input type="file" @change="onFileChange" accept="image/*">
           <v-textarea v-model="newArtist.bio" label="Bio"></v-textarea>
           <v-btn type="submit" color="primary">Add</v-btn>
@@ -42,7 +41,7 @@ export default {
       this.newArtist.image = '';
       this.newArtist.bio = '';
       // Close form dialog
-      this.$emit('close-dialog');
+      this.$emit('close-dialog', false);
     },
     onFileChange(event) {
       const file = event.target.files[0];
@@ -54,6 +53,11 @@ export default {
         };
       }
     },
+    dialogClosed(value) {
+      if (!value) {
+        this.$emit('close-dialog', false);
+      }
+    }
   }
 }
 </script>

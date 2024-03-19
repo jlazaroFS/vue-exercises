@@ -1,22 +1,17 @@
 <template>
   <v-dialog v-model="dialog" width="500" @input="dialogClosed">
     <v-card v-if="selectedArtist">
-      <v-card-title class="text-h5 grey lighten-2">{{ selectedArtist.name }}</v-card-title>
-      <v-card-text>{{ selectedArtist.bio }}</v-card-text>
-      <v-divider></v-divider>
+      <v-card-title class="text-h5 grey lighten-2">Deleting {{ selectedArtist.name }}</v-card-title>
+      <v-card-text>Are you sure you want to delete {{ selectedArtist.name }}?</v-card-text>
       <v-card-actions>
-        <v-btn color="secondary" text @click="showEditArtistDialog">
-          <v-icon>mdi-pencil</v-icon>
-          Edit
-        </v-btn>
-        <v-btn color="error" text @click="showDeleteArtistDialog">
+        <v-spacer></v-spacer>
+        <v-btn color="error" text @click="deleteArtist">
           <v-icon>mdi-trash-can</v-icon>
           Delete
         </v-btn>
-        <v-spacer></v-spacer>
         <v-btn color="primary" text @click="closeDialog">
           <v-icon>mdi-close</v-icon>
-          Close
+          Cancel
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -44,13 +39,9 @@ export default {
         this.$emit('close-dialog', false);
       }
     },
-    showEditArtistDialog() {
+    deleteArtist() {
       this.$emit('close-dialog', false);
-      this.$emit('show-edit-dialog', this.selectedArtist)     
-    },
-    showDeleteArtistDialog() {
-      this.$emit('close-dialog', false);
-      this.$emit('show-delete-dialog', this.selectedArtist)     
+      this.$emit('delete-artist', this.selectedArtist);
     }
   }
 }
