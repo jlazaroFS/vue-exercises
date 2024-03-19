@@ -3,20 +3,7 @@
     <h1>Artists</h1>
     <p>Lorem ipsum</p>
 
-    <!-- Button to open the add artist form dialog -->
-    <v-btn
-      color="primary"
-      elevation="2"
-      absolute
-      bottom
-      right
-      fab
-      @click="showFormDialog = true"
-    >
-      <v-icon>
-        mdi-plus
-      </v-icon>
-    </v-btn>
+    <AddButton @click="showFormDialog = true"/>
 
     <AddArtistDialog
       :showFormDialog="showFormDialog"
@@ -66,6 +53,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import AddButton from '../components/AddButton.vue';
 import ArtistCard from '../components/ArtistCard.vue';
 import ArtistDialog from '../components/ArtistDialog.vue';
 import AddArtistDialog from '../components/AddArtistDialog.vue';
@@ -74,6 +62,7 @@ import DeleteArtistDialog from '../components/DeleteArtistDialog.vue';
 
 export default {
   components: {
+    AddButton,
     ArtistCard,
     ArtistDialog,
     AddArtistDialog,
