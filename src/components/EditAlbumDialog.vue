@@ -1,14 +1,15 @@
 <template>
     <v-dialog v-model="dialog" max-width="500" @input="dialogClosed">
        <v-card>
-        <v-card-title>Edit Artist</v-card-title>
+        <v-card-title>Edit Album</v-card-title>
         <v-card-text>
-            <v-text-field v-model="editedArtist.name" label="Name"></v-text-field>
+            <v-text-field v-model="editedAlbum.title" label="Title"></v-text-field>
+            <v-select v-model="editedAlbum.artist" :items="artist_names" label="Artist"></v-select>
             <input type="file" @change="onFileChange" accept="image/*">
-            <v-textarea v-model="editedArtist.bio" label="Bio"></v-textarea>
+            <v-textarea v-model="editedAlbum.details" label="Details"></v-textarea>
         </v-card-text>
         <v-card-actions>
-            <v-btn color="primary" @click="editArtist">
+            <v-btn color="primary" @click="editAlbum">
                 <v-icon>mdi-content-save-edit</v-icon>
                 Save
             </v-btn>
@@ -22,35 +23,48 @@
 </template>
 
 <script>
-export default{
+import { mapGetters } from 'vuex';
+
+export default {
     props: {
         dialog: {
             type: Boolean,
             required: true
         },
-        selectedArtist: {
+        selectedAlbum: {
             type: Object,
             required: true
         }
     },
     data() {
-        return {
-            editedArtist: {
-                name: '',
-                image: '',
-                bio: ''
-            }
+      return {
+        editedAlbum: {
+          title: '',
+          artist: '',
+          cover: '',
+          details: ''
         }
+      }
+    },
+    computed: {
+      ...mapGetters([
+        'artists'
+      ]),
+      artist_names() {
+        return this.artists.map(artist => artist.name);
+      }
     },
     watch: {
-        selectedArtist: {
+        selectedAlbum: {
             handler(newValue) {
-                this.editedArtist.name = newValue.name;
-                this.editedArtist.image = newValue.image;
-                this.editedArtist.bio = newValue.bio;
+                this.editedAlbum.title = newValue.title;
+                this.editedAlbum.artist = newValue.artist;
+                this.editedAlbum.cover = newValue.cover;
+                this.editedAlbum.details = newValue.details;
             },
             immediate: true
-        }
+        },
+
     },
     methods: {
         closeDialog() {
@@ -61,9 +75,9 @@ export default{
                 this.$emit('close-dialog', false);
             }
         },
-        editArtist() {
+        editAlbum() {
             this.$emit('close-dialog', false);
-            this.$emit('edit-artist', {...this.selectedArtist, ...this.editedArtist});
+            this.$emit('edit-album', {...this.selectedAlbum, ...this.editedAlbum});
         },
         onFileChange(event) {   // FIXME: Image is not updating
             const file = event.target.files[0];
@@ -71,10 +85,10 @@ export default{
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = () => {
-                    this.editedArtist.image = reader.result;
+                    this.editedAlbum.cover = reader.result;
                 };
             }
-        }
+        },
     }
 }
 </script>

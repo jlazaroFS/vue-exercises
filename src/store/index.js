@@ -18,11 +18,21 @@ export default new Vuex.Store({
         bio: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
         imageDataUrl: null // Store image data URL for preview
       },
+    ],
+    albums: [
+      {
+        title: "Red",
+        cover: "red.png",
+        artist: "Taylor Swift",
+        details: "Lorem ipsum",
+        imageDataUrl: null
+      }
     ]
   },
   getters: {
     title: state => state.title,
-    artists: state => state.artists
+    artists: state => state.artists,
+    albums: state => state.albums
   },
   mutations: {
   },
