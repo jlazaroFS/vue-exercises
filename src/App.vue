@@ -1,9 +1,9 @@
 <template>
   <v-app id="inspire">
-    <NavigationDrawer :drawer="drawer" :items="items" />
+    <NavigationDrawer :drawer="drawer" :items="items" @toggleDrawer="toggleDrawer" />
     
     <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
     
@@ -27,5 +27,10 @@ export default {
       { title: 'Artists', icon: 'mdi-account-music', to: '/artists' },
     ],
   }),
+  methods: {
+    toggleDrawer() {
+      this.drawer = !this.drawer;
+    }
+  }
 };
 </script>

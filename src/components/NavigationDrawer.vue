@@ -38,8 +38,10 @@
 
 <script>
 export default {
+  props: {
+    drawer: Boolean
+  },
   data: () => ({
-    drawer: null,
     items: [
       { title: 'Albums', icon: 'mdi-album', to: '/albums' },
       { title: 'Artists', icon: 'mdi-account-music', to: '/artists' },
