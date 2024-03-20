@@ -1,8 +1,5 @@
 <template>
   <div class="albums pa-8">
-    <h1>Albums</h1>
-    <p>Lorem ipsum</p>
-
     <AddButton @click="showFormDialog = true"/>
 
     <AddAlbumDialog
@@ -61,6 +58,7 @@ import EditAlbumDialog from '../components/EditAlbumDialog.vue';
 import DeleteAlbumDialog from '../components/DeleteAlbumDialog.vue';
 
 export default {
+  name: 'Albums',
   components: {
     AddButton,
     AlbumCard,
@@ -77,6 +75,9 @@ export default {
       showFormDialog: false,
       selectedAlbum: null,
     };
+  },
+  mounted() {
+    this.$emit('updateTitle', this.$options.name);
   },
   computed: {
     ...mapGetters([

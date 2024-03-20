@@ -1,8 +1,5 @@
 <template>
   <div class="artists pa-8">
-    <h1>Artists</h1>
-    <p>Lorem ipsum</p>
-
     <AddButton @click="showFormDialog = true"/>
 
     <AddArtistDialog
@@ -61,6 +58,7 @@ import EditArtistDialog from '../components/EditArtistDialog.vue';
 import DeleteArtistDialog from '../components/DeleteArtistDialog.vue';
 
 export default {
+  name: 'Artists',
   components: {
     AddButton,
     ArtistCard,
@@ -77,6 +75,9 @@ export default {
       showFormDialog: false,
       selectedArtist: null,
     };
+  },
+  mounted() {
+    this.$emit('updateTitle', this.$options.name);
   },
   computed: {
     ...mapGetters([

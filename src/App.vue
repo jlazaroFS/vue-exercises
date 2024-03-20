@@ -4,11 +4,11 @@
     
     <v-app-bar app>
       <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
     </v-app-bar>
     
     <v-main>
-      <router-view></router-view>
+      <router-view @updateTitle="updateTitle"></router-view>
     </v-main>
   </v-app>
 </template>
@@ -22,14 +22,14 @@ export default {
   },
   data: () => ({
     drawer: null,
-    items: [
-      { title: 'Albums', icon: 'mdi-album', to: '/albums' },
-      { title: 'Artists', icon: 'mdi-account-music', to: '/artists' },
-    ],
+    pageTitle: 'Application'
   }),
   methods: {
     toggleDrawer() {
       this.drawer = !this.drawer;
+    },
+    updateTitle(title) {
+      this.pageTitle = title;
     }
   }
 };

@@ -5,10 +5,10 @@
     <v-list-item>
       <v-list-item-content>
         <v-list-item-title class="text-h6">
-          Application
+          Vue App!
         </v-list-item-title>
         <v-list-item-subtitle>
-          subtext
+          built by Jorge Lázaro Ruiz
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
@@ -45,6 +45,7 @@ export default {
     items: [
       { title: 'Albums', icon: 'mdi-album', to: '/albums' },
       { title: 'Artists', icon: 'mdi-account-music', to: '/artists' },
+      { title: 'Pokémon', icon: 'mdi-pokeball', to: '/pokemon' }
     ],
   }),
 };
