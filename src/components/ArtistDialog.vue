@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" width="500" @input="dialogClosed">
     <v-card v-if="selectedArtist">
       <v-card-title class="text-h5 grey lighten-2">{{ selectedArtist.name }}</v-card-title>
-      <v-card-text>{{ selectedArtist.bio }}</v-card-text>
+      <v-card-text class="mt-5">{{ selectedArtist.bio }}</v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
         <v-btn color="secondary" text @click="showEditArtistDialog">

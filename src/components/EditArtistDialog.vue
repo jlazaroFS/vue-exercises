@@ -65,15 +65,15 @@ export default{
             this.$emit('edit-artist', {...this.selectedArtist, ...this.editedArtist});
         },
         onFileChange(event) {   // FIXME: Image is not updating
-        const file = event.target.files[0];
+            const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = () => {
-                    this.editedArtist.image = reader.result;
+                this.editedArtist.image = reader.result;
                 };
             }
-        },
+        }
     }
 }
 </script>

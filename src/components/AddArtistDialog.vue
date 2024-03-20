@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      newArtist: { // Object to store new artist details
+      newArtist: {
         name: '',
         image: '',
         bio: ''
@@ -36,11 +36,9 @@ export default {
   methods: {
     addNewArtist() {
       this.$emit('add-artist', this.newArtist);
-      // Reset form fields
       this.newArtist.name = '';
       this.newArtist.image = '';
       this.newArtist.bio = '';
-      // Close form dialog
       this.$emit('close-dialog', false);
     },
     onFileChange(event) {
