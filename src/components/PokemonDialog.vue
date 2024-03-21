@@ -8,7 +8,9 @@
             <div>
               <v-card-title class="text-h5 grey lighten-2">{{ selectedPokemon.name }}</v-card-title>
               <v-card-subtitle class="text grey lighten-2">{{ selectedPokemon.genus }}</v-card-subtitle>
-              <v-card-text class="mt-5">{{ selectedPokemon.desc }}</v-card-text>
+              <v-card-text class="mt-5" style="font-size: 20px; text-align: justify;">
+                {{ selectedPokemon.desc }}
+              </v-card-text>
             </div>
           </v-col>
           <v-col cols="6">
