@@ -47,7 +47,8 @@ export default {
                             imgurl: response.data.sprites.front_default,
                             artworkurl: response.data.sprites.other['official-artwork'].front_default,
                             id: response.data.id,
-                            types: response.data.types.map(typeData => typeData.type.name)
+                            types: response.data.types.map(typeData => typeData.type.name),
+                            cry: response.data.cries.latest
                         };
 
                         axios
@@ -65,7 +66,6 @@ export default {
                                         .replace(/-\n/g, "-")
                                         .replace(/\n/g, " ");
                                 } else {
-                                    // Handle case where English entry is not found
                                     console.error("English flavor text entry not found for this Pokémon.");
                                 }
                             })

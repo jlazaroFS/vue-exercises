@@ -1,5 +1,6 @@
 <template>
   <v-dialog v-model="dialog" max-width="1000px" @input="dialogClosed">
+    <audio ref="cry" :src="selectedPokemon.cry" autoplay></audio>
     <v-card>
       <v-container>
         <v-row>
@@ -24,6 +25,7 @@
         </v-row>
       </v-container>
       <v-divider></v-divider>
+      <div class="pokemon-number-footer">#{{ formatPokemonNumber(selectedPokemon.id) }}</div>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" text @click="closeDialog">
@@ -56,13 +58,11 @@ export default {
         this.$emit('close-dialog', false);
       }
     },
-    showEditPokemonDialog() {
-      this.$emit('close-dialog', false);
-      this.$emit('show-edit-dialog', this.selectedPokemon);
+    formatPokemonNumber(number) {
+      return String(number).padStart(4, '0');
     },
-    showDeletePokemonDialog() {
-      this.$emit('close-dialog', false);
-      this.$emit('show-delete-dialog', this.selectedPokemon);
+    playCry() {
+      this.$refs.cry.play();
     },
     getTypeChipColor(type) {
       const typeColors = {
@@ -85,7 +85,6 @@ export default {
         'steel': '#B7B7CE',
         'fairy': '#D685AD',
       };
-      // Return color class based on the type
       return typeColors[type] || '#ddd';
     }
   }
@@ -101,9 +100,6 @@ export default {
 .pokemon-name-header {
   background-color: #ddd;
   padding: 8px;
-  border-radius: 5px;
-  text-align: center;
-  font-weight: bold;
   font-size: 18px;
 }
 
@@ -124,5 +120,13 @@ export default {
   margin: 5px;
   font-size: 20px;
   padding: 20px 30px;
+}
+
+.pokemon-number-footer {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.3);
 }
 </style>
