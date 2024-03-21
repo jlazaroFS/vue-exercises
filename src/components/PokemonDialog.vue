@@ -3,35 +3,29 @@
     <v-card>
       <v-container>
         <v-row>
-          <!-- Left side -->
           <v-col cols="6">
             <div>
-              <v-card-title class="text-h5 grey lighten-2">{{ selectedPokemon.genus }}</v-card-title>
+              <v-card-title class="text-h5 grey lighten-2">{{ selectedPokemon.name.toUpperCase()
+                }}</v-card-title>
+              <v-card-subtitle class="text-h6 grey lighten-2">{{ selectedPokemon.genus }}</v-card-subtitle>
               <v-card-text class="mt-5">{{ selectedPokemon.bio }}</v-card-text>
             </div>
           </v-col>
-          <!-- Right side -->
+          <!-- Right side with sprite and types -->
           <v-col cols="6">
-            <div>
+            <div class="pokemon-info">
               <img :src="selectedPokemon.imgurl" :alt="selectedPokemon.name" class="pokemon-sprite">
-              <v-chip v-for="(type, index) in selectedPokemon.types" :key="index" class="mr-2 mt-2"
-                :color="getTypeChipColor(type)">
-                {{ type }}
-              </v-chip>
+              <div class="type-chips">
+                <v-chip v-for="(type, index) in selectedPokemon.types" :key="index" :color="getTypeChipColor(type)">
+                  {{ type.toUpperCase() }}
+                </v-chip>
+              </div>
             </div>
           </v-col>
         </v-row>
       </v-container>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn color="secondary" text @click="showEditPokemonDialog">
-          <v-icon>mdi-pencil</v-icon>
-          Edit
-        </v-btn>
-        <v-btn color="error" text @click="showDeletePokemonDialog">
-          <v-icon>mdi-trash-can</v-icon>
-          Delete
-        </v-btn>
         <v-spacer></v-spacer>
         <v-btn color="primary" text @click="closeDialog">
           <v-icon>mdi-close</v-icon>
@@ -72,15 +66,28 @@ export default {
       this.$emit('show-delete-dialog', this.selectedPokemon);
     },
     getTypeChipColor(type) {
-      // Define color classes for each Pokémon type
       const typeColors = {
-        'Normal': 'normal-color',
-        'Fire': 'fire-color',
-        'Water': 'water-color',
-        // Add more types and colors as needed
+        'normal': '#A8A77A',
+        'fire': '#EE8130',
+        'water': '#6390F0',
+        'electric': '#F7D02C',
+        'grass': '#7AC74C',
+        'ice': '#96D9D6',
+        'fighting': '#C22E28',
+        'poison': '#A33EA1',
+        'ground': '#E2BF65',
+        'flying': '#A98FF3',
+        'psychic': '#F95587',
+        'bug': '#A6B91A',
+        'rock': '#B6A136',
+        'ghost': '#735797',
+        'dragon': '#6F35FC',
+        'dark': '#705746',
+        'steel': '#B7B7CE',
+        'fairy': '#D685AD',
       };
       // Return color class based on the type
-      return typeColors[type] || 'default-color';
+      return typeColors[type] || '#ddd';
     }
   }
 }
@@ -92,25 +99,24 @@ export default {
   height: auto;
 }
 
-/* Define color classes for each Pokémon type */
-.normal-color {
-  background-color: #A8A77A;
-  color: white;
+.pokemon-name-header {
+  background-color: #ddd;
+  padding: 8px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
 }
 
-.fire-color {
-  background-color: #EE8130;
-  color: white;
+.pokemon-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.water-color {
-  background-color: #6390F0;
-  color: white;
+.type-chips {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
-
-/* Add more type color classes as needed */
-.default-color {
-  background-color: #DDDDDD;
-  color: black;
-}
-</style>
