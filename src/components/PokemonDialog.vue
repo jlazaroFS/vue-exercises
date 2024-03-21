@@ -1,20 +1,19 @@
 <template>
-  <v-dialog v-model="dialog" max-width="500px" @input="dialogClosed">
+  <v-dialog v-model="dialog" max-width="1000px" @input="dialogClosed">
     <v-card>
       <v-container>
         <v-row>
           <v-col cols="6">
             <div>
-              <v-card-title class="text-h5 grey lighten-2">{{ selectedPokemon.name.toUpperCase()
-                }}</v-card-title>
-              <v-card-subtitle class="text-h6 grey lighten-2">{{ selectedPokemon.genus }}</v-card-subtitle>
-              <v-card-text class="mt-5">{{ selectedPokemon.bio }}</v-card-text>
+              <v-card-title class="text-h5 grey lighten-2">{{ selectedPokemon.name }}</v-card-title>
+              <v-card-subtitle class="text grey lighten-2">{{ selectedPokemon.genus }}</v-card-subtitle>
+              <v-card-text class="mt-5">{{ selectedPokemon.desc }}</v-card-text>
             </div>
           </v-col>
-          <!-- Right side with sprite and types -->
           <v-col cols="6">
             <div class="pokemon-info">
-              <img :src="selectedPokemon.imgurl" :alt="selectedPokemon.name" class="pokemon-sprite">
+              <img :src="selectedPokemon.artworkurl" :alt="selectedPokemon.name"
+                class="max-width: 400px; max-height: 400px">
               <div class="type-chips">
                 <v-chip v-for="(type, index) in selectedPokemon.types" :key="index" :color="getTypeChipColor(type)">
                   {{ type.toUpperCase() }}
@@ -118,5 +117,12 @@ export default {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 10px;
+  margin-top: 20px;
 }
+
+.type-chips .v-chip {
+  margin: 5px;
+  font-size: 20px;
+  padding: 20px 30px;
+}
+</style>

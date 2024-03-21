@@ -2,7 +2,6 @@
   <div @click="showPokemonDialog(pokemon)" class="pokemon-button">
     <img :src="pokemon.imgurl" :alt="pokemon.name" class="pokemon-sprite">
     <div class="pokemon-number">#{{ formatPokemonNumber(pokemon.id) }}</div>
-    <p class="pokemon-name">{{ pokemon.name }}</p>
   </div>
 </template>
 
@@ -87,24 +86,5 @@ export default {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   text-size-adjust: calc();
-}
-
-/* Define color classes for each Pokémon type */
-.normal-color {
-  background-color: #A8A77A;
-}
-
-.fire-color {
-  background-color: #EE8130;
-}
-
-.water-color {
-  background-color: #6390F0;
-}
-
-/* Add more type color classes as needed */
-.default-color {
-  background-color: #DDDDDD;
-  /* Default color */
 }
 </style>
