@@ -1,8 +1,8 @@
 <template>
-  <div @click="showAlbumDialog(album)" class="album-button">
+  <div @mouseenter="hover = true" @mouseleave="hover = false" @click="showAlbumDialog(album)" class="album-button">
     <img :src="album.imageDataUrl ? album.imageDataUrl : require(`../assets/albums/${album.cover}`)" :alt="album.title"
       class="album-cover">
-    <p class="album-title">{{ album.title }}</p>
+    <p :class="{ 'album-title': true, 'album-title-hover': hover }">{{ album.title }}</p>
   </div>
 </template>
 
@@ -13,6 +13,11 @@ export default {
       type: Object,
       required: true
     }
+  },
+  data() {
+    return {
+      hover: false
+    };
   },
   methods: {
     showAlbumDialog(album) {
@@ -27,14 +32,11 @@ export default {
   max-width: 200px;
   max-height: 200px;
   filter: grayscale(100%);
-  /* Convert image to black and white */
   transition: filter 0.3s ease;
-  /* Add transition for smooth effect */
 }
 
 .album-button:hover img {
   filter: grayscale(0%);
-  /* Remove grayscale filter on hover */
 }
 
 .album-button {
@@ -52,5 +54,11 @@ export default {
   color: white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.album-title-hover {
+  color: black;
+  background-color: #ccc;
 }
 </style>
