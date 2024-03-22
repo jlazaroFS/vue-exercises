@@ -20,16 +20,6 @@ export default {
     formatPokemonNumber(number) {
       return String(number).padStart(4, '0');
     },
-    getTypeColorClass(types) {
-      const typeColors = {
-        'Normal': 'normal-color',
-        'Fire': 'fire-color',
-        'Water': 'water-color',
-      };
-
-      const type = types[0];
-      return typeColors[type] || 'default-color';
-    }
   }
 }
 </script>
@@ -74,17 +64,5 @@ export default {
   max-height: 200px;
   position: relative;
   z-index: 1;
-}
-
-.pokemon-name {
-  text-align: center;
-  background-color: #7170E6;
-  color: white;
-  margin: 0;
-  font-size: 12px;
-  text-transform: uppercase;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  text-size-adjust: calc();
 }
 </style>
