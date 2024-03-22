@@ -1,8 +1,23 @@
 <template>
-  <v-dialog v-model="dialog" width="500" @input="dialogClosed">
+  <v-dialog v-model="dialog" width="650" @input="dialogClosed">
     <v-card v-if="selectedArtist">
       <v-card-title class="text-h5 grey lighten-2">{{ selectedArtist.name }}</v-card-title>
-      <v-card-text class="mt-5">{{ selectedArtist.bio }}</v-card-text>
+      <v-container>
+        <v-row>
+          <v-col cols="6">
+            <div>
+              <v-card-text class="mt-5">{{ selectedArtist.bio }}</v-card-text>
+            </div>
+          </v-col>
+          <v-col cols="6">
+            <div class="artist-pic">
+              <img
+                :src="selectedArtist.imageDataUrl ? selectedArtist.imageDataUrl : require(`../assets/artists/${selectedArtist.image}`)"
+                :alt="selectedArtist.name" style="max-height: 350px;">
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
       <v-divider></v-divider>
       <v-card-actions>
         <v-btn color="secondary" text @click="showEditArtistDialog">
@@ -46,12 +61,20 @@ export default {
     },
     showEditArtistDialog() {
       this.$emit('close-dialog', false);
-      this.$emit('show-edit-dialog', this.selectedArtist)     
+      this.$emit('show-edit-dialog', this.selectedArtist)
     },
     showDeleteArtistDialog() {
       this.$emit('close-dialog', false);
-      this.$emit('show-delete-dialog', this.selectedArtist)     
+      this.$emit('show-delete-dialog', this.selectedArtist)
     }
   }
 }
 </script>
+
+<style scoped>
+.artist-pic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>

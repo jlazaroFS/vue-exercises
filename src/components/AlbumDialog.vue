@@ -1,9 +1,24 @@
 <template>
-  <v-dialog v-model="dialog" width="500" @input="dialogClosed">
+  <v-dialog v-model="dialog" width="650" @input="dialogClosed">
     <v-card v-if="selectedAlbum">
       <v-card-title class="text-h5 grey lighten-2">{{ selectedAlbum.title }}</v-card-title>
       <v-card-subtitle class="text grey lighten-2 pt-1">{{ selectedAlbum.artist }}</v-card-subtitle>
-      <v-card-text class="mt-5">{{ selectedAlbum.details }}</v-card-text>
+      <v-container>
+        <v-row>
+          <v-col cols="6">
+            <div>
+              <v-card-text class="mt-5">{{ selectedAlbum.details }}</v-card-text>
+            </div>
+          </v-col>
+          <v-col cols="6">
+            <div class="album-cover">
+              <img
+                :src="selectedAlbum.imageDataUrl ? selectedAlbum.imageDataUrl : require(`../assets/albums/${selectedAlbum.cover}`)"
+                :alt="selectedAlbum.title" style="max-height: 300px;">
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
       <v-divider></v-divider>
       <v-card-actions>
         <v-btn color="secondary" text @click="showEditAlbumDialog">
@@ -47,11 +62,11 @@ export default {
     },
     showEditAlbumDialog() {
       this.$emit('close-dialog', false);
-      this.$emit('show-edit-dialog', this.selectedAlbum)     
+      this.$emit('show-edit-dialog', this.selectedAlbum)
     },
     showDeleteAlbumDialog() {
       this.$emit('close-dialog', false);
-      this.$emit('show-delete-dialog', this.selectedAlbum)     
+      this.$emit('show-delete-dialog', this.selectedAlbum)
     }
   }
 }
