@@ -1,34 +1,15 @@
 <template>
-  <v-dialog v-model="dialog" max-width="500px" @input="dialogClosed">
-    <v-card>
-      <v-container>
-        <v-row>
-          <!-- Left side -->
-          <v-col cols="6">
-            <div>
-              <v-card-title class="text-h5 grey lighten-2">{{ selectedPokemon.genus }}</v-card-title>
-              <v-card-text class="mt-5">{{ selectedPokemon.bio }}</v-card-text>
-            </div>
-          </v-col>
-          <!-- Right side -->
-          <v-col cols="6">
-            <div>
-              <img :src="selectedPokemon.imgurl" :alt="selectedPokemon.name" class="pokemon-sprite">
-              <v-chip v-for="(type, index) in selectedPokemon.types" :key="index" class="mr-2 mt-2"
-                :color="getTypeChipColor(type)">
-                {{ type }}
-              </v-chip>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
+  <v-dialog v-model="dialog" width="500" @input="dialogClosed">
+    <v-card v-if="selectedArtist">
+      <v-card-title class="text-h5 grey lighten-2">{{ selectedArtist.name }}</v-card-title>
+      <v-card-text class="mt-5">{{ selectedArtist.bio }}</v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn color="secondary" text @click="showEditPokemonDialog">
+        <v-btn color="secondary" text @click="showEditArtistDialog">
           <v-icon>mdi-pencil</v-icon>
           Edit
         </v-btn>
-        <v-btn color="error" text @click="showDeletePokemonDialog">
+        <v-btn color="error" text @click="showDeleteArtistDialog">
           <v-icon>mdi-trash-can</v-icon>
           Delete
         </v-btn>
@@ -49,7 +30,7 @@ export default {
       type: Boolean,
       required: true
     },
-    selectedPokemon: {
+    selectedArtist: {
       type: Object,
       required: true
     }
@@ -63,54 +44,14 @@ export default {
         this.$emit('close-dialog', false);
       }
     },
-    showEditPokemonDialog() {
+    showEditArtistDialog() {
       this.$emit('close-dialog', false);
-      this.$emit('show-edit-dialog', this.selectedPokemon);
+      this.$emit('show-edit-dialog', this.selectedArtist)     
     },
-    showDeletePokemonDialog() {
+    showDeleteArtistDialog() {
       this.$emit('close-dialog', false);
-      this.$emit('show-delete-dialog', this.selectedPokemon);
-    },
-    getTypeChipColor(type) {
-      // Define color classes for each Pokémon type
-      const typeColors = {
-        'Normal': 'normal-color',
-        'Fire': 'fire-color',
-        'Water': 'water-color',
-        // Add more types and colors as needed
-      };
-      // Return color class based on the type
-      return typeColors[type] || 'default-color';
+      this.$emit('show-delete-dialog', this.selectedArtist)     
     }
   }
 }
 </script>
-
-<style scoped>
-.pokemon-sprite {
-  width: 100%;
-  height: auto;
-}
-
-/* Define color classes for each Pokémon type */
-.normal-color {
-  background-color: #A8A77A;
-  color: white;
-}
-
-.fire-color {
-  background-color: #EE8130;
-  color: white;
-}
-
-.water-color {
-  background-color: #6390F0;
-  color: white;
-}
-
-/* Add more type color classes as needed */
-.default-color {
-  background-color: #DDDDDD;
-  color: black;
-}
-</style>
