@@ -6,7 +6,7 @@
         <v-row>
           <v-col cols="6">
             <div>
-              <v-card-title class="text-h5 grey lighten-2">{{ selectedPokemon.name }}</v-card-title>
+              <v-card-title class="text-h4 grey lighten-2">{{ selectedPokemon.name }}</v-card-title>
               <v-card-subtitle class="text grey lighten-2">{{ selectedPokemon.genus }}</v-card-subtitle>
               <v-card-text class="mt-5" style="font-size: 20px; text-align: justify;">
                 {{ selectedPokemon.desc }}
@@ -15,8 +15,7 @@
           </v-col>
           <v-col cols="6">
             <div class="pokemon-info">
-              <img :src="selectedPokemon.artworkurl" :alt="selectedPokemon.name"
-                class="max-width: 400px; max-height: 400px">
+              <img :src="selectedPokemon.artworkurl" :alt="selectedPokemon.name" style="max-height: 390px;">
               <div class="type-chips">
                 <v-chip v-for="(type, index) in selectedPokemon.types" :key="index" :color="getTypeChipColor(type)">
                   {{ type.toUpperCase() }}
@@ -94,11 +93,6 @@ export default {
 </script>
 
 <style scoped>
-.pokemon-sprite {
-  width: 100%;
-  height: auto;
-}
-
 .pokemon-name-header {
   background-color: #ddd;
   padding: 8px;
