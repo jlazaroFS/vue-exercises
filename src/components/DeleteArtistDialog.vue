@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" width="500" @input="dialogClosed">
     <v-card v-if="selectedArtist">
       <v-card-title class="text-h5 grey lighten-2">Deleting {{ selectedArtist.name }}</v-card-title>
-      <v-card-text>Are you sure you want to delete {{ selectedArtist.name }}?</v-card-text>
+      <v-card-text class="mt-5">Are you sure you want to delete {{ selectedArtist.name }}?</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="error" text @click="deleteArtist">
