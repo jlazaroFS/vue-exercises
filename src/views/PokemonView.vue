@@ -48,12 +48,30 @@ export default {
                             artworkurl: response.data.sprites.other['official-artwork'].front_default,
                             id: response.data.id,
                             types: response.data.types.map(typeData => typeData.type.name),
-                            cry: response.data.cries.latest
+                            cry: response.data.cries.latest,
+                            height: response.data.height / 10,
+                            weight: response.data.weight / 10,
+                            ability:
+                                response.data.abilities[0].ability.name
+                                    .split("-")
+                                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                                    .join(" ")
                         };
 
                         axios
                             .get(`https://pokeapi.co/api/v2/pokemon-species/${i}`)
                             .then(speciesResponse => {
+                                pokemon.generation =
+                                    speciesResponse.data.generation.name
+                                        .split("-")
+                                        .map((word, index) => {
+                                            if (index === 0) {
+                                                return word.charAt(0).toUpperCase() + word.slice(1);
+                                            } else {
+                                                return word.toUpperCase();
+                                            }
+                                        })
+                                        .join(" ");
                                 const englishEntry = speciesResponse.data.flavor_text_entries.find(entry => entry.language.name === "en");
                                 if (englishEntry) {
                                     pokemon.name = speciesResponse.data.names.find(name => name.language.name === "en").name;

@@ -11,6 +11,22 @@
               <v-card-text class="mt-5" style="font-size: 20px; text-align: justify;">
                 {{ selectedPokemon.desc }}
               </v-card-text>
+              <div class="pokemon-details mt-5 ml-5">
+                <div><strong>Height</strong>
+                  <p style="font-size: 18px">{{ selectedPokemon.height }} m</p>
+                </div>
+                <div><strong>Weight</strong>
+                  <p style="font-size: 18px">{{ selectedPokemon.weight }} kg</p>
+                </div>
+                <div><strong>Ability</strong>
+                  <p style="font-size: 18px">{{ selectedPokemon.ability }}
+                  </p>
+                </div>
+                <div><strong>Generation</strong>
+                  <p style="font-size: 18px">{{ selectedPokemon.generation }}
+                  </p>
+                </div>
+              </div>
             </div>
           </v-col>
           <v-col cols="6">
@@ -124,5 +140,14 @@ export default {
   left: 10px;
   font-size: 20px;
   color: rgba(0, 0, 0, 0.3);
+}
+
+.pokemon-details {
+  font-size: 16px;
+}
+
+.pokemon-details>div {
+  display: inline-block;
+  width: 50%;
 }
 </style>
