@@ -1,51 +1,29 @@
 <template>
   <div class="albums pa-8">
-    <AddButton @click="showFormDialog = true"/>
+    <AddButton @click="showFormDialog = true" />
 
-    <AddAlbumDialog
-      :showFormDialog="showFormDialog"
-      @add-album="addNewAlbum"
-      @close-dialog="showFormDialog = false"
-    />
+    <AddAlbumDialog :showFormDialog="showFormDialog" @add-album="addNewAlbum" @close-dialog="showFormDialog = false" />
 
     <div class="album-grid">
-      <AlbumCard
-        v-for="(album, index) in albums"
-        :key="index"
-        :album="album"
-        @show-album-dialog="showAlbumDialog"
-      />
+      <AlbumCard v-for="(album, index) in albums" :key="index" :album="album" @show-album-dialog="showAlbumDialog" />
     </div>
 
-    <AlbumDialog
-      :dialog="dialog"
-      :selectedAlbum="selectedAlbum"
-      @close-dialog="dialog = false"
-      @show-edit-dialog="showEditAlbumDialog"
-      @show-delete-dialog="showDeleteAlbumDialog"
-    />
+    <AlbumDialog :dialog="dialog" :selectedAlbum="selectedAlbum" @close-dialog="dialog = false"
+      @show-edit-dialog="showEditAlbumDialog" @show-delete-dialog="showDeleteAlbumDialog" />
 
-    <EditAlbumDialog
-      :dialog="editDialog"
-      :selectedAlbum="selectedAlbum"
-      @close-dialog="editDialog = false"
-      @edit-album="editAlbum"
-    />
+    <EditAlbumDialog :dialog="editDialog" :selectedAlbum="selectedAlbum" @close-dialog="editDialog = false"
+      @edit-album="editAlbum" />
 
-    <DeleteAlbumDialog
-      :dialog="deleteDialog"
-      :selectedAlbum="selectedAlbum"
-      @close-dialog="deleteDialog = false"
-      @delete-album="deleteAlbum"
-    />
+    <DeleteAlbumDialog :dialog="deleteDialog" :selectedAlbum="selectedAlbum" @close-dialog="deleteDialog = false"
+      @delete-album="deleteAlbum" />
   </div>
 </template>
 
 <style scoped>
-  .album-grid {
-    display: flex;
-    flex-wrap: wrap;
-  }
+.album-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>
 
 <script>
@@ -91,6 +69,7 @@ export default {
     },
     addNewAlbum(newAlbum) {
       this.albums.push({
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7), // A way of getting unique IDs without importing new libraries
         title: newAlbum.title,
         artist: newAlbum.artist,
         cover: newAlbum.cover,
@@ -103,7 +82,7 @@ export default {
       this.editDialog = true;
     },
     editAlbum(album) {
-      const index = this.albums.findIndex(a => a.title === album.title);
+      const index = this.albums.findIndex(a => a.id === album.id);
       if (index !== -1) {
         this.albums.splice(index, 1, album);
       }
@@ -113,7 +92,7 @@ export default {
       this.deleteDialog = true;
     },
     deleteAlbum(album) {
-      const index = this.albums.findIndex(a => a.title === album.title);
+      const index = this.albums.findIndex(a => a.id === album.id);
       if (index !== -1) {
         this.albums.splice(index, 1);
       }
