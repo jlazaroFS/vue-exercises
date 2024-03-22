@@ -1,7 +1,11 @@
 <template>
-  <div @click="showPokemonDialog(pokemon)" class="pokemon-button">
-    <img :src="pokemon.imgurl" :alt="pokemon.name" class="pokemon-sprite">
-    <div class="pokemon-number">#{{ formatPokemonNumber(pokemon.id) }}</div>
+  <div @mouseenter="hover = true" @mouseleave="hover = false" @click="showPokemonDialog(pokemon)"
+    class="pokemon-button">
+    <img :src="pokemon.imgurl" :alt="pokemon.name" class="pokemon-sprite" :class="{ 'sprite-hover': hover }">
+    <div class="pokemon-info">
+      <div class="pokemon-number" v-if="!hover">#{{ formatPokemonNumber(pokemon.id) }}</div>
+      <div class="pokemon-name" v-if="hover">{{ pokemon.name }}</div>
+    </div>
   </div>
 </template>
 
@@ -12,6 +16,11 @@ export default {
       type: Object,
       required: true
     }
+  },
+  data() {
+    return {
+      hover: false
+    };
   },
   methods: {
     showPokemonDialog(pokemon) {
@@ -33,36 +42,45 @@ export default {
   overflow: hidden;
 }
 
-.pokemon-button img {
-  max-width: 200px;
-  max-height: 200px;
-  filter: grayscale(100%);
-  transition: filter 0.3s ease;
-}
-
-.pokemon-button:hover img {
-  filter: grayscale(0%);
-}
-
-.pokemon-number {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  color: rgba(0, 0, 0, 0.5);
-  padding: 4px;
-  border-radius: 5px;
-  z-index: 0;
-  font-size: 17px;
-  font-weight: bold;
-  border: 2px solid #000;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
 .pokemon-sprite {
   width: 100%;
   height: auto;
   max-height: 200px;
+  transition: transform 0.3s ease;
   position: relative;
+  z-index: 2;
+}
+
+.sprite-hover {
+  transform: translateY(20px);
+}
+
+.pokemon-info {
+  position: absolute;
+  top: 5px;
+  left: 5px;
   z-index: 1;
+}
+
+.pokemon-number,
+.pokemon-name {
+  color: rgba(0, 0, 0, 0.5);
+  padding: 4px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: color 0.3s ease;
+}
+
+.pokemon-button:hover .pokemon-name {
+  display: block;
+  background-color: black;
+  color: whitesmoke
+}
+
+.pokemon-name {
+  display: none;
 }
 </style>
