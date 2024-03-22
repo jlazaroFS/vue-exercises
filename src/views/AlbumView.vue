@@ -1,6 +1,6 @@
 <template>
   <div class="albums pa-8">
-    <AddButton @click="showFormDialog = true" />
+    <AddButton :color="'#008F7A'" @click="showFormDialog = true" />
 
     <AddAlbumDialog :showFormDialog="showFormDialog" @add-album="addNewAlbum" @close-dialog="showFormDialog = false" />
 

@@ -1,14 +1,6 @@
 <template>
-  <v-btn
-    color="primary"
-    elevation="2"
-    absolute
-    bottom
-    right
-    fab
-    @click="onClick"
-  >
-    <v-icon>
+  <v-btn :color="color" elevation="2" class="floating-btn" fab @click="onClick">
+    <v-icon color="white">
       mdi-plus
     </v-icon>
   </v-btn>
@@ -26,3 +18,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.floating-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+</style>

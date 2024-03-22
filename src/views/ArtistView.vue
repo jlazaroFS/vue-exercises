@@ -1,12 +1,12 @@
 <template>
   <div class="artists pa-8">
-    <AddButton @click="showFormDialog = true" />
+    <AddButton :color="'#7170E6'" @click="showFormDialog = true" />
 
     <AddArtistDialog :showFormDialog="showFormDialog" @add-artist="addNewArtist"
       @close-dialog="showFormDialog = false" />
 
     <div class="artist-grid">
-      <ArtistCard v-for="(artist, index) in artists" :key="index" :artist="artist"
+      <ArtistCard v-for="(   artist, index   ) in    artists   " :key="index" :artist="artist"
         @show-artist-dialog="showArtistDialog" />
     </div>
 
